@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HelpIndia - AI Healthcare Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="icon" href="https://img.icons8.com/fluency/48/medical-doctor.png" type="image/png">
+  <style>
+    .popup-show {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    .chat-container {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border-radius: 18px;
+      max-width: 80%;
+    }
+    .user-message {
+      background: #10b981;
+      color: white;
+      margin-left: auto;
+    }
+    .bot-message {
+      background: #f3f4f6;
+      color: #374151;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Navigation Bar -->
+  <header class="gradient-bg text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="https://img.icons8.com/fluency/48/medical-doctor.png" alt="HelpIndia Logo" class="w-10 h-10">
+        <h1 class="text-2xl font-bold">HelpIndia</h1>
+      </div>
+      <nav class="hidden md:flex space-x-6">
+        <button onclick="showPage('home')" class="hover:underline cursor-pointer">Home</button>
+        <button onclick="showPage('diagnosis')" class="hover:underline cursor-pointer">AI Diagnosis</button>
+        <button onclick="showPage('chatbot')" class="hover:underline cursor-pointer">Virtual Doctor</button>
+        <button onclick="showPage('doctors')" class="hover:underline cursor-pointer">Find Doctors</button>
+        <button onclick="showPage('login')" class="bg-white text-green-600 px-4 py-2 rounded-full hover:bg-gray-100">Login</button>
+      </nav>
+      <button class="md:hidden" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- HOME PAGE -->
+  <div id="home" class="page active">
+    <!-- Hero Section -->
+    <section class="bg-green-50 py-16">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center px-6">
+        <div class="flex-1 mb-10 md:mb-0">
+          <h2 class="text-4xl font-extrabold mb-4 text-green-800">Empowering India with AI-Driven Healthcare</h2>
+          <p class="text-lg text-gray-700 max-w-xl mb-6">
+            Revolutionary AI-powered medical diagnosis, virtual healthcare assistance, and seamless doctor-patient connectivity for accessible healthcare across India.
+          </p>
+          <div class="space-x-4">
+            <button onclick="showPage('diagnosis')" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">Start Diagnosis</button>
+            <button onclick="showPage('chatbot')" class="border border-green-600 text-green-600 px-6 py-3 rounded-lg hover:bg-green-50 transition">Ask Virtual Doctor</button>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="w-full h-96 bg-gradient-to-br from-green-400 to-blue-500 rounded-xl shadow-lg flex items-center justify-center">
+            <div class="text-white text-center">
+              <svg class="w-32 h-32 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+              <h3 class="text-2xl font-bold">AI-Powered Healthcare</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 bg-white">
+      <div class="max-w-6xl mx-auto px-6">
+        <h3 class="text-3xl font-semibold text-center mb-10 text-green-800">Our Platform Features</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center p-6 bg-green-50 rounded-xl">
+            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold mb-2">AI Diagnosis</h4>
+            <p class="text-gray-600">Advanced AI models for detecting brain tumors, lung diseases, skin conditions, and more from medical images.</p>
+          </div>
+          <div class="text-center p-6 bg-green-50 rounded-xl">
+            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold mb-2">Virtual Doctor</h4>
+            <p class="text-gray-600">24/7 AI-powered chatbot providing medical information, symptom analysis, and health guidance.</p>
+          </div>
+          <div class="text-center p-6 bg-green-50 rounded-xl">
+            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold mb-2">Find Doctors</h4>
+            <p class="text-gray-600">Connect with verified doctors in your area, filter by specialty and location, book appointments instantly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- LOGIN PAGE -->
+  <div id="login" class="page">
+    <div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-md w-full space-y-8">
+        <div class="text-center">
+          <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+          <p class="mt-2 text-sm text-gray-600">Choose your account type</p>
+        </div>
+        
+        <!-- Account Type Selection -->
+        <div class="flex space-x-4 mb-6">
+          <button onclick="switchLoginType('patient')" id="patientTab" class="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg font-medium">Patient</button>
+          <button onclick="switchLoginType('doctor')" id="doctorTab" class="flex-1 py-2 px-4 bg-gray-200 text-gray-700 rounded-lg font-medium">Doctor</button>
+        </div>
+
+        <!-- Login Form -->
+        <form class="mt-8 space-y-6" onsubmit="handleLogin(event)">
+          <div class="space-y-4">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+              <input id="email" name="email" type="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+            </div>
+            <div>
+              <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+              <input id="password" name="password" type="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+              <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+            </div>
+            <div class="text-sm">
+              <a href="#" class="font-medium text-green-600 hover:text-green-500">Forgot password?</a>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            Sign in
+          </button>
+        </form>
+
+        <div class="text-center">
+          <p class="text-sm text-gray-600">
+            Don't have an account? 
+            <button onclick="showRegisterForm()" class="font-medium text-green-600 hover:text-green-500">Sign up</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI DIAGNOSIS PAGE -->
+  <div id="diagnosis" class="page">
+    <div class="min-h-screen bg-gray-50 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">AI-Powered Medical Diagnosis</h2>
+          <p class="mt-4 text-lg text-gray-600">Upload your medical images for instant AI analysis</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Brain Tumor Detection -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer" onclick="openDiagnosisModal('brain-tumor')">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">Brain Tumor Detection</h3>
+            <p class="text-gray-600 text-center">MRI scan analysis for detecting brain tumors with 95% accuracy</p>
+          </div>
+
+          <!-- Lung Disease Analysis -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer" onclick="openDiagnosisModal('lung-disease')">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">Lung Disease Analysis</h3>
+            <p class="text-gray-600 text-center">X-ray analysis for pneumonia, tuberculosis, and other lung conditions</p>
+          </div>
+
+          <!-- Skin Cancer Detection -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer" onclick="openDiagnosisModal('skin-cancer')">
+            <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">Skin Cancer Detection</h3>
+            <p class="text-gray-600 text-center">Dermatoscopy image analysis for melanoma and skin lesions</p>
+          </div>
+
+          <!-- Diabetic Retinopathy -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer" onclick="openDiagnosisModal('diabetic-retinopathy')">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">Diabetic Retinopathy</h3>
+            <p class="text-gray-600 text-center">Retinal scan analysis for diabetic eye complications</p>
+          </div>
+
+          <!-- Heart Disease -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer" onclick="openDiagnosisModal('heart-disease')">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">Heart Disease</h3>
+            <p class="text-gray-600 text-center">ECG and cardiac imaging analysis for heart conditions</p>
+          </div>
+
+          <!-- Bone Fracture -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer" onclick="openDiagnosisModal('bone-fracture')">
+            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">Bone Fracture</h3>
+            <p class="text-gray-600 text-center">X-ray analysis for bone fractures and orthopedic conditions</p>
+          </div>
+
+          <!-- Kidney Stone -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer" onclick="openDiagnosisModal('kidney-stone')">
+            <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">Kidney Stone</h3>
+            <p class="text-gray-600 text-center">CT scan analysis for kidney stones and urological conditions</p>
+          </div>
+
+          <!-- Liver Disease -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer" onclick="openDiagnosisModal('liver-disease')">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">Liver Disease</h3>
+            <p class="text-gray-600 text-center">Ultrasound and CT analysis for liver conditions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHATBOT PAGE -->
+  <div id="chatbot" class="page">
+    <div class="min-h-screen bg-gray-50 py-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-extrabold text-gray-900">Virtual Doctor Assistant</h2>
+          <p class="mt-4 text-lg text-gray-600">Ask me about symptoms, conditions, treatments, and health advice</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div id="chatMessages" class="chat-container mb-4 h-96 overflow-y-auto p-4 bg-gray-50 rounded-lg">
+            <div class="message bot-message">
+              <p>Hello! I'm your virtual doctor assistant. I can help you with:</p>
+              <ul class="mt-2 text-sm">
+                <li>• Symptom analysis and possible conditions</li>
+                <li>• General health information and advice</li>
+                <li>• Medication information and side effects</li>
+                <li>• Preventive care recommendations</li>
+                <li>• When to seek medical attention</li>
+              </ul>
+              <p class="mt-2 text-sm text-gray-600">How can I help you today?</p>
+            </div>
+          </div>
+
+          <div class="flex space-x-4">
+            <input type="text" id="userMessage" placeholder="Ask me about your health concerns..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendMessage()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">Send</button>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button onclick="quickMessage('What are the symptoms of diabetes?')" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200">Diabetes symptoms</button>
+            <button onclick="quickMessage('I have a headache and fever')" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200">Headache & fever</button>
+            <button onclick="quickMessage('What foods are good for heart health?')" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200">Heart healthy foods</button>
+            <button onclick="quickMessage('How to lower blood pressure naturally?')" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200">Lower blood pressure</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIND DOCTORS PAGE -->
+  <div id="doctors" class="page">
+    <div class="min-h-screen bg-gray-50 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-extrabold text-gray-900">Find Doctors Near You</h2>
+          <p class="mt-4 text-lg text-gray-600">Connect with verified healthcare professionals in your area</p>
+        </div>
+
+        <!-- Search Filters -->
+        <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+              <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                <option>Select City</option>
+                <option>Delhi</option>
+                <option>Mumbai</option>
+                <option>Bangalore</option>
+                <option>Chennai</option>
+                <option>Kolkata</option>
+                <option>Hyderabad</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Specialty</label>
+              <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                <option>All Specialties</option>
+                <option>Cardiology</option>
+                <option>Neurology</option>
+                <option>Dermatology</option>
+                <option>Orthopedics</option>
+                <option>Gynecology</option>
+                <option>Pediatrics</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Availability</label>
+              <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                <option>Any Time</option>
+                <option>Today</option>
+                <option>Tomorrow</option>
+                <option>This Week</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <button class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Search</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Doctor Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Doctor 1 -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900">Dr. Rajesh Kumar</h3>
+                <p class="text-gray-600">Cardiologist</p>
+                <div class="flex items-center mt-1">
+                  <span class="text-yellow-400">★★★★★</span>
+                  <span class="text-sm text-gray-600 ml-2">4.9 (127 reviews)</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-700 mb-4">15+ years experience in cardiovascular medicine. Specializes in heart disease prevention and treatment.</p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm text-gray-600">📍 AIIMS, New Delhi</span>
+              <span class="text-sm text-gray-600">💰 ₹800/consultation</span>
+            </div>
+            <div class="flex space-x-2">
+              <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Book Appointment</button>
+              <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">View Profile</button>
+            </div>
+          </div>
+
+          <!-- Doctor 2 -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900">Dr. Priya Sharma</h3>
+                <p class="text-gray-600">Neurologist</p>
+                <div class="flex items-center mt-1">
+                  <span class="text-yellow-400">★★★★★</span>
+                  <span class="text-sm text-gray-600 ml-2">4.8 (89 reviews)</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-700 mb-4">12+ years experience in neurology. Expert in brain disorders, epilepsy, and neurological diagnostics.</p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm text-gray-600">📍 Fortis Hospital, Mumbai</span>
+              <span class="text-sm text-gray-600">💰 ₹1000/consultation</span>
+            </div>
+            <div class="flex space-x-2">
+              <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Book Appointment</button>
+              <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">View Profile</button>
+            </div>
+          </div>
+
+          <!-- Doctor 3 -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900">Dr. Amit Patel</h3>
+                <p class="text-gray-600">Dermatologist</p>
+                <div class="flex items-center mt-1">
+                  <span class="text-yellow-400">★★★★☆</span>
+                  <span class="text-sm text-gray-600 ml-2">4.7 (156 reviews)</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-700 mb-4">10+ years experience in dermatology. Specializes in skin cancer detection and cosmetic treatments.</p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm text-gray-600">📍 Apollo Hospital, Bangalore</span>
+              <span class="text-sm text-gray-600">💰 ₹600/consultation</span>
+            </div>
+            <div class="flex space-x-2">
+              <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Book Appointment</button>
+              <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">View Profile</button>
+            </div>
+          </div>
+
+          <!-- Doctor 4 -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900">Dr. Sunita Reddy</h3>
+                <p class="text-gray-600">Gynecologist</p>
+                <div class="flex items-center mt-1">
+                  <span class="text-yellow-400">★★★★★</span>
+                  <span class="text-sm text-gray-600 ml-2">4.9 (203 reviews)</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-700 mb-4">18+ years experience in women's health. Expert in pregnancy care and reproductive health.</p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm text-gray-600">📍 Max Hospital, Delhi</span>
+              <span class="text-sm text-gray-600">💰 ₹900/consultation</span>
+            </div>
+            <div class="flex space-x-2">
+              <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Book Appointment</button>
+              <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">View Profile</button>
+            </div>
+          </div>
+
+          <!-- Doctor 5 -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                <svg class="w-8 h-8 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900">Dr. Vikram Singh</h3>
+                <p class="text-gray-600">Orthopedist</p>
+                <div class="flex items-center mt-1">
+                  <span class="text-yellow-400">★★★★☆</span>
+                  <span class="text-sm text-gray-600 ml-2">4.6 (94 reviews)</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-700 mb-4">14+ years experience in orthopedics. Specializes in joint replacement and sports injuries.</p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm text-gray-600">📍 Medanta Hospital, Gurgaon</span>
+              <span class="text-sm text-gray-600">💰 ₹1200/consultation</span>
+            </div>
+            <div class="flex space-x-2">
+              <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Book Appointment</button>
+              <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">View Profile</button>
+            </div>
+          </div>
+
+          <!-- Doctor 6 -->
+          <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+            <div class="flex items-center mb-4">
+              <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mr-4">
+                <svg class="w-8 h-8 text-teal-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900">Dr. Kavya Nair</h3>
+                <p class="text-gray-600">Pediatrician</p>
+                <div class="flex items-center mt-1">
+                  <span class="text-yellow-400">★★★★★</span>
+                  <span class="text-sm text-gray-600 ml-2">4.8 (178 reviews)</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-700 mb-4">11+ years experience in pediatrics. Expert in child healthcare and developmental disorders.</p>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-sm text-gray-600">📍 Rainbow Hospital, Chennai</span>
+              <span class="text-sm text-gray-600">💰 ₹700/consultation</span>
+            </div>
+            <div class="flex space-x-2">
+              <button class="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Book Appointment</button>
+              <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">View Profile</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diagnosis Modal -->
+  <div id="diagnosisModal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
+    <div class="popup-show bg-white p-8 rounded-xl w-full max-w-2xl shadow-xl relative max-h-90vh overflow-y-auto">
+      <button id="closeDiagnosisModal" class="absolute top-2 right-3 text-gray-500 text-2xl font-bold hover:text-red-600">&times;</button>
+      <div id="diagnosisContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-green-600 text-white py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <img src="https://img.icons8.com/fluency/48/medical-doctor.png" alt="HelpIndia Logo" class="w-8 h-8">
+            <h3 class="text-xl font-bold">HelpIndia</h3>
+          </div>
+          <p class="text-green-100">Revolutionizing healthcare with AI-powered diagnosis and virtual medical assistance.</p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Services</h4>
+          <ul class="space-y-2 text-green-100">
+            <li><a href="#" class="hover:text-white">AI Diagnosis</a></li>
+            <li><a href="#" class="hover:text-white">Virtual Doctor</a></li>
+            <li><a href="#" class="hover:text-white">Find Doctors</a></li>
+            <li><a href="#" class="hover:text-white">Health Records</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Support</h4>
+          <ul class="space-y-2 text-green-100">
+            <li><a href="#" class="hover:text-white">Help Center</a></li>
+            <li><a href="#" class="hover:text-white">Contact Us</a></li>
+            <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Contact</h4>
+          <div class="space-y-2 text-green-100">
+            <p>📧 support@helpindia.org</p>
+            <p>📞 +91 9876543210</p>
+            <p>📍 New Delhi, India</p>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-green-500 mt-8 pt-8 text-center text-green-100">
+        <p>&copy; 2025 HelpIndia. Built with heart and code for a healthier nation.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    let currentUser = null;
+    let currentUserType = 'patient';
+
+    // Page Navigation
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      
+      // Update URL hash
+      window.location.hash = pageId;
+    }
+
+    // Login Functions
+    function switchLoginType(type) {
+      currentUserType = type;
+      const patientTab = document.getElementById('patientTab');
+      const doctorTab = document.getElementById('doctorTab');
+      
+      if (type === 'patient') {
+        patientTab.classList.add('bg-green-600', 'text-white');
+        patientTab.classList.remove('bg-gray-200', 'text-gray-700');
+        doctorTab.classList.add('bg-gray-200', 'text-gray-700');
+        doctorTab.classList.remove('bg-green-600', 'text-white');
+      } else {
+        doctorTab.classList.add('bg-green-600', 'text-white');
+        doctorTab.classList.remove('bg-gray-200', 'text-gray-700');
+        patientTab.classList.add('bg-gray-200', 'text-gray-700');
+        patientTab.classList.remove('bg-green-600', 'text-white');
+      }
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // Simulate login
+      currentUser = {
+        email: email,
+        type: currentUserType,
+        name: currentUserType === 'patient' ? 'John Doe' : 'Dr. Smith'
+      };
+      
+      alert(`Welcome ${currentUser.name}! Login successful as ${currentUserType}.`);
+      showPage('home');
+    }
+
+    // Diagnosis Functions
+    function openDiagnosisModal(type) {
+      const modal = document.getElementById('diagnosisModal');
+      const content = document.getElementById('diagnosisContent');
+      
+      const diagnosisTypes = {
+        'brain-tumor': {
+          title: 'Brain Tumor Detection',
+          description: 'Upload your MRI scan for AI-powered brain tumor analysis',
+          accepts: '.dcm,.jpg,.jpeg,.png',
+          accuracy: '95.2%'
+        },
+        'lung-disease': {
+          title: 'Lung Disease Analysis',
+          description: 'Upload your chest X-ray for pneumonia and tuberculosis detection',
+          accepts: '.dcm,.jpg,.jpeg,.png',
+          accuracy: '93.8%'
+        },
+        'skin-cancer': {
+          title: 'Skin Cancer Detection',
+          description: 'Upload dermatoscopy images for melanoma analysis',
+          accepts: '.jpg,.jpeg,.png',
+          accuracy: '91.5%'
+        },
+        'diabetic-retinopathy': {
+          title: 'Diabetic Retinopathy',
+          description: 'Upload retinal photographs for diabetic eye disease detection',
+          accepts: '.jpg,.jpeg,.png',
+          accuracy: '94.1%'
+        },
+        'heart-disease': {
+          title: 'Heart Disease Analysis',
+          description: 'Upload ECG or cardiac imaging for heart condition analysis',
+          accepts: '.dcm,.jpg,.jpeg,.png,.pdf',
+          accuracy: '92.7%'
+        },
+        'bone-fracture': {
+          title: 'Bone Fracture Detection',
+          description: 'Upload X-ray images for fracture and bone abnormality detection',
+          accepts: '.dcm,.jpg,.jpeg,.png',
+          accuracy: '89.3%'
+        },
+        'kidney-stone': {
+          title: 'Kidney Stone Detection',
+          description: 'Upload CT scan images for kidney stone analysis',
+          accepts: '.dcm,.jpg,.jpeg,.png',
+          accuracy: '90.8%'
+        },
+        'liver-disease': {
+          title: 'Liver Disease Analysis',
+          description: 'Upload ultrasound or CT images for liver condition assessment',
+          accepts: '.dcm,.jpg,.jpeg,.png',
+          accuracy: '88.9%'
+        }
+      };
+      
+      const diagnosis = diagnosisTypes[type];
+      
+      content.innerHTML = `
+        <h2 class="text-2xl font-bold mb-4 text-green-700">${diagnosis.title}</h2>
+        <p class="text-gray-600 mb-6">${diagnosis.description}</p>
+        
+        <div class="bg-green-50 p-4 rounded-lg mb-6">
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div><strong>AI Model Accuracy:</strong> ${diagnosis.accuracy}</div>
+            <div><strong>Processing Time:</strong> ~30 seconds</div>
+            <div><strong>Supported Formats:</strong> DICOM, JPEG, PNG</div>
+            <div><strong>Max File Size:</strong> 50MB</div>
+          </div>
+        </div>
+        
+        <form onsubmit="processDiagnosis(event, '${type}')" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Patient Information</label>
+            <div class="grid grid-cols-2 gap-4">
+              <input type="text" placeholder="Full Name" required class="w-full border rounded px-4 py-2 focus:ring-2 ring-green-500">
+              <input type="number" placeholder="Age" required class="w-full border rounded px-4 py-2 focus:ring-2 ring-green-500">
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Medical History (Optional)</label>
+            <textarea placeholder="Any relevant medical history, current medications, or symptoms..." rows="3" class="w-full border rounded px-4 py-2 focus:ring-2 ring-green-500"></textarea>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Medical Image</label>
+            <input type="file" accept="${diagnosis.accepts}" required class="w-full border rounded px-4 py-2">
+            <p class="text-xs text-gray-500 mt-1">Accepted formats: ${diagnosis.accepts.replace(/\./g, '').toUpperCase()}</p>
+          </div>
+          
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <div class="flex">
+              <svg class="w-5 h-5 text-yellow-400 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <div class="text-sm text-yellow-800">
+                <p class="font-medium">Important Disclaimer</p>
+                <p>This AI analysis is for preliminary screening only and should not replace professional medical diagnosis. Always consult with a qualified healthcare provider for proper medical evaluation.</p>
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 w-full transition">
+            Process with AI Analysis
+          </button>
+        </form>
+      `;
+      
+      modal.classList.remove('hidden');
+    }
+
+    function processDiagnosis(event, type) {
+      event.preventDefault();
+      alert('Processing your medical image with AI... This is a demo - in production, this would analyze your uploaded image and provide detailed results.');
+      document.getElementById('diagnosisModal').classList.add('hidden');
+    }
+
+    // Chatbot Functions
+    function sendMessage() {
+      const input = document.getElementById('userMessage');
+      const message = input.value.trim();
+      if (message) {
+        addMessage(message, 'user');
+        input.value = '';
+        
+        // Simulate bot response
+        setTimeout(() => {
+          const response = getBotResponse(message);
+          addMessage(response, 'bot');
+        }, 1000);
+      }
+    }
+
+    function quickMessage(message) {
+      document.getElementById('userMessage').value = message;
+      sendMessage();
+    }
+
+    function addMessage(text, sender) {
+      const chatMessages = document.getElementById('chatMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${sender}-message`;
+      messageDiv.innerHTML = `<p>${text}</p>`;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getBotResponse(message) {
+      const responses = {
+        'diabetes': 'Common symptoms of diabetes include frequent urination, excessive thirst, unexplained weight loss, fatigue, blurred vision, and slow-healing wounds. If you\'re experiencing these symptoms, please consult a healthcare provider for proper testing.',
+        'headache': 'Headache with fever could indicate various conditions including viral infections, flu, or more serious conditions. If symptoms persist or worsen, especially with stiff neck, severe headache, or high fever, seek immediate medical attention.',
+        'heart': 'Heart-healthy foods include fatty fish (salmon, mackerel), nuts, berries, leafy greens, whole grains, avocados, and olive oil. Limit processed foods, excess sodium, and saturated fats.',
+        'blood pressure': 'Natural ways to lower blood pressure: regular exercise, reduce sodium intake, maintain healthy weight, limit alcohol, quit smoking, manage stress, get adequate sleep, and eat potassium-rich foods like bananas and spinach.'
+      };
+      
+      const lowerMessage = message.toLowerCase();
+      for (const [key, response] of Object.entries(responses)) {
+        if (lowerMessage.includes(key)) {
+          return response;
+        }
+      }
+      
+      return 'I understand you have a health concern. While I can provide general health information, I recommend consulting with a healthcare professional for personalized medical advice. You can use our "Find Doctors" feature to connect with qualified physicians in your area.';
+    }
+
+    function handleChatKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    // Modal Functions
+    document.getElementById('closeDiagnosisModal').addEventListener('click', () => {
+      document.getElementById('diagnosisModal').classList.add('hidden');
+    });
+
+    // Initialize page based on URL hash
+    window.addEventListener('load', () => {
+      const hash = window.location.hash.substring(1);
+      if (hash && document.getElementById(hash)) {
+        showPage(hash);
+      }
+    });
+
+    // Mobile menu toggle (if needed)
+    function toggleMobileMenu() {
+      // Add mobile menu functionality here
+      alert('Mobile menu would toggle here');
+    }
+  </script>
+
+</body>
+</html>
